@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Category {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  name           String
+  description    String?
+  icon           String?
+  order          Int           @default(0)
+  problems       Problem[]
+  subCategories  SubCategory[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("categories")
+}
+
+model SubCategory {
+  id          String     @id @default(cuid())
+  categoryId  String
+  category    Category   @relation(fields: [categoryId], references: [id])
+  slug        String     @unique
+  name        String
+  order       Int        @default(0)
+  problems    Problem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("sub_categories")
+}
+
+model Problem {
+  id               String        @id @default(cuid())
+  number           Int           @unique
+  title            String
+  categoryId       String
+  category         Category      @relation(fields: [categoryId], references: [id])
+  subCategoryId    String?
+  subCategory      SubCategory?  @relation(fields: [subCategoryId], references: [id])
+  difficulty       String
+  timeLimit        Int
+  memoryLimit      Int
+  description      String
+  inputDesc        String
+  outputDesc       String
+  examples         String
+  type             String        @default("STANDARD")
+  premium          Boolean       @default(false)
+  status           String        @default("PUBLISHED")
+  tags             String        @default("[]")
+  hint             String?
+  submitCount      Int           @default(0)
+  acCount          Int           @default(0)
+  submissions      Submission[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@map("problems")
+}
+
+model SubscriptionPlan {
+  id          String   @id @default(cuid())
+  name        String
+  price       Int
+  description String?
+  features    String   @default("[]")
+  subscriptions UserSubscription[]
+  createdAt   DateTime @default(now())
+
+  @@map("subscription_plans")
+}
+
+model UserSubscription {
+  id             String           @id @default(cuid())
+  userId         String
+  user           User             @relation(fields: [userId], references: [id])
+  planId         String
+  plan           SubscriptionPlan @relation(fields: [planId], references: [id])
+  status         String           @default("ACTIVE")
+  startDate      DateTime         @default(now())
+  endDate        DateTime?
+  paymentMethod  String?
+  createdAt      DateTime         @default(now())
+
+  @@unique([userId, planId])
+  @@map("user_subscriptions")
+}
+
+model User {
+  id             String       @id @default(cuid())
+  username       String       @unique
+  email          String       @unique
+  password       String
+  role           String       @default("USER")
+  status         String       @default("ACTIVE")
+  displayName    String?
+  organization   String?
+  githubUrl      String?
+  blogUrl        String?
+  avatarUrl      String?
+  rating         Int          @default(1200)
+  solved         Int          @default(0)
+  bio            String?
+  submissions    Submission[]
+  subscriptions  UserSubscription[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@map("users")
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  problemId   String
+  problem     Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  language    String
+  code        String
+  status      String
+  execTime    Int?
+  memory      Int?
+  createdAt   DateTime @default(now())
+
+  @@index([userId, problemId])
+  @@map("submissions")
+}

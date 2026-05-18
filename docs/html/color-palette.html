@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>컬러 팔레트 — sco</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">&larr; 문서 목록</a>
+  <div class="header">
+    <h1>컬러 팔레트</h1>
+    <p class="subtitle">owner: design · status: final · last updated: 2026-05-12</p>
+  </div>
+
+  <h2>핵심 결정사항</h2>
+  <ol>
+    <li>어두운 흑연 단색 기반</li>
+    <li>Azure <code class="tag tag-blue">#58A6FF</code> 단일 강조색 (일반 서비스)</li>
+    <li>Lime <code class="tag tag-green">#C3FF4D</code> 라이브 대회/이벤트용 (특수 상황만)</li>
+  </ol>
+
+  <h2>Base Colors</h2>
+
+  <h3>Background</h3>
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td><code>--bg-950</code></td><td><code>#0F1317</code></td><td>전체 배경</td></tr>
+    <tr><td><code>--bg-900</code></td><td><code>#151A20</code></td><td>카드/패널</td></tr>
+    <tr><td><code>--bg-850</code></td><td><code>#1A2027</code></td><td>호버/보조 패널</td></tr>
+    <tr><td><code>--bg-800</code></td><td><code>#1F272F</code></td><td>버튼/인풋 배경</td></tr>
+  </table>
+
+  <h3>Line/Border</h3>
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td><code>--line-700</code></td><td><code>#262D35</code></td><td>구분선/테두리</td></tr>
+    <tr><td><code>--line-600</code></td><td><code>#2D3640</code></td><td>호버 테두리</td></tr>
+    <tr><td><code>--line-500</code></td><td><code>#3A4550</code></td><td>활성 테두리</td></tr>
+  </table>
+
+  <h3>Text</h3>
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td><code>--text-100</code></td><td><code>#EDF2F7</code></td><td>제목/주요 본문</td></tr>
+    <tr><td><code>--text-200</code></td><td><code>#D8E0E8</code></td><td>강조 본문</td></tr>
+    <tr><td><code>--text-300</code></td><td><code>#C9D1D9</code></td><td>보조 본문</td></tr>
+    <tr><td><code>--text-400</code></td><td><code>#A8B5C2</code></td><td>설명/링크</td></tr>
+    <tr><td><code>--text-500</code></td><td><code>#96A1AC</code></td><td>메타/시간</td></tr>
+    <tr><td><code>--text-600</code></td><td><code>#7A8590</code></td><td>비활성/플레이스홀더</td></tr>
+  </table>
+
+  <h3>Code Editor</h3>
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td><code>--code-980</code></td><td><code>#0B0D10</code></td><td>코드 에디터 배경</td></tr>
+    <tr><td><code>--code-960</code></td><td><code>#111418</code></td><td>코드 에디터 헤더</td></tr>
+  </table>
+
+  <h2>Accent Colors</h2>
+
+  <h3>Azure (기본 강조색)</h3>
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td><code>--accent-azure</code></td><td><code class="tag tag-blue">#58A6FF</code></td><td>링크, 버튼, 포커스</td></tr>
+    <tr><td><code>--accent-azure-hover</code></td><td><code>#79B8FF</code></td><td>호버 상태</td></tr>
+  </table>
+
+  <h3>Lime (라이브/이벤트용)</h3>
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td><code>--accent-lime</code></td><td><code class="tag tag-green">#C3FF4D</code></td><td>라이브 대회, 실시간 성공</td></tr>
+    <tr><td><code>--accent-lime-hover</code></td><td><code>#D4FF7A</code></td><td>호버 상태</td></tr>
+  </table>
+
+  <p><strong>사용 규칙:</strong> 라이브 대회, 이벤트, 실시간 성공 상태에만 사용. 일반 서비스에서는 Azure 사용.</p>
+
+  <h2>Status Colors</h2>
+  <p><strong>중요:</strong> 색상만으로 상태를 전달하지 말고 텍스트 배지와 아이콘을 함께 사용</p>
+
+  <table>
+    <tr><th>상태</th><th>색상</th><th>용도</th></tr>
+    <tr><td>Success</td><td><code class="tag tag-green">#3FB950</code></td><td>AC, Verified</td></tr>
+    <tr><td>Warning</td><td><code class="tag tag-orange">#D29922</code></td><td>TLE, 보류</td></tr>
+    <tr><td>Error</td><td><code class="tag tag-red">#F85149</code></td><td>WA, RE, CE</td></tr>
+    <tr><td>Info</td><td><code class="tag tag-blue">#58A6FF</code></td><td>정보, 안내</td></tr>
+  </table>
+
+  <h3>Badge 스타일</h3>
+  <pre>.badge-success {
+  background: rgba(63, 185, 80, 0.15);
+  color: #3FB950;
+  border: 1px solid rgba(63, 185, 80, 0.3);
+}
+
+.badge-warning {
+  background: rgba(210, 153, 34, 0.15);
+  color: #D29922;
+  border: 1px solid rgba(210, 153, 34, 0.3);
+}
+
+.badge-error {
+  background: rgba(248, 81, 73, 0.15);
+  color: #F85149;
+  border: 1px solid rgba(248, 81, 73, 0.3);
+}</pre>
+
+  <h2>Difficulty Colors</h2>
+  <table>
+    <tr><th>난이도</th><th>텍스트</th><th>배경</th><th>테두리</th></tr>
+    <tr><td>쉬움</td><td><code class="tag tag-green">#4ADE80</code></td><td><code>rgba(63, 185, 80, 0.1)</code></td><td><code>rgba(63, 185, 80, 0.2)</code></td></tr>
+    <tr><td>보통</td><td><code class="tag tag-orange">#FBBF24</code></td><td><code>rgba(210, 153, 34, 0.1)</code></td><td><code>rgba(210, 153, 34, 0.2)</code></td></tr>
+    <tr><td>어려움</td><td><code class="tag tag-red">#F87171</code></td><td><code>rgba(248, 81, 73, 0.1)</code></td><td><code>rgba(248, 81, 73, 0.2)</code></td></tr>
+  </table>
+
+  <h2>CSS 변수</h2>
+  <pre>:root {
+  --bg-950: #0F1317;  --bg-900: #151A20;
+  --bg-850: #1A2027;  --bg-800: #1F272F;
+  --line-700: #262D35;  --line-600: #2D3640;  --line-500: #3A4550;
+  --text-100: #EDF2F7;  --text-200: #D8E0E8;
+  --text-300: #C9D1D9;  --text-400: #A8B5C2;
+  --text-500: #96A1AC;  --text-600: #7A8590;
+  --code-980: #0B0D10;  --code-960: #111418;
+  --accent-azure: #58A6FF;  --accent-azure-hover: #79B8FF;
+  --accent-lime: #C3FF4D;  --accent-lime-hover: #D4FF7A;
+  --status-success: #3FB950;  --status-warning: #D29922;
+  --status-error: #F85149;  --status-info: #58A6FF;
+}</pre>
+
+  <h2>접근성 검증</h2>
+  <table>
+    <tr><th>조합</th><th>대비율</th><th>기준</th><th>결과</th></tr>
+    <tr><td>text-100 on bg-950</td><td>13.4:1</td><td>4.5:1</td><td><span class="tag tag-green">✓</span></td></tr>
+    <tr><td>text-300 on bg-900</td><td>9.8:1</td><td>4.5:1</td><td><span class="tag tag-green">✓</span></td></tr>
+    <tr><td>text-500 on bg-900</td><td>6.2:1</td><td>4.5:1</td><td><span class="tag tag-green">✓</span></td></tr>
+    <tr><td>accent-azure on bg-950</td><td>4.8:1</td><td>4.5:1</td><td><span class="tag tag-green">✓</span></td></tr>
+  </table>
+</div>
+</body>
+</html>

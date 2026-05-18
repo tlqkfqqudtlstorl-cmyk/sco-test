@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System — sco</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">&larr; 문서 목록</a>
+  <div class="header">
+    <h1>sco Design System</h1>
+    <p class="subtitle">DESIGN_VARIANCE 8 · MOTION 6 · DENSITY 4 (baseline)</p>
+  </div>
+
+  <blockquote>저지·CTF 인접 제품: 정답만이 아니라 <strong>sco·검증·경계 조건</strong>을 전면에 둔 연습 환경. 시각 언어는 터미널·에디터의 차분한 대비와 정보 위계를 우선한다.</blockquote>
+
+  <h2>Atmosphere</h2>
+  <ul>
+    <li><strong>모드</strong>: 다크 전용. 배경은 거의 검정이지만 <strong>순수 <code>#000000</code> 금지</strong> — 미세한 블루·그레이 기운의 카본 톤.</li>
+    <li><strong>캐릭터</strong>: 조용한 도구감. 홍보형 일러스트·네온·AI 퍼플 그라데이션 금지.</li>
+    <li><strong>한 줄 톤</strong>: "채점기 앞에서 말을 아끼는 UI" — 여백과 타이포가 설명을 대신한다.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Palette</h2>
+  <table>
+    <tr><th>Role</th><th>Hex</th><th>Note</th></tr>
+    <tr><td>Base canvas</td><td><code>#0b0d10</code></td><td>앱 루트 배경</td></tr>
+    <tr><td>Surface</td><td><code>#12151a</code></td><td>카드·패널</td></tr>
+    <tr><td>Elevated</td><td><code>#181c22</code></td><td>호버·테이블 헤더</td></tr>
+    <tr><td>Border subtle</td><td><code>#2a313c</code></td><td>기본 구분선</td></tr>
+    <tr><td>Border strong</td><td><code>#3a4450</code></td><td>강조 프레임</td></tr>
+    <tr><td>Text primary</td><td><code>#e8eaed</code></td><td>본문·제목</td></tr>
+    <tr><td>Text secondary</td><td><code>#9aa5b1</code></td><td>보조 설명</td></tr>
+    <tr><td>Text muted</td><td><code>#6b7785</code></td><td>메타·캡션</td></tr>
+    <tr><td>Link / focus signal</td><td><code class="tag tag-blue">#89b4d4</code></td><td>링크·포커스 링 (채도 낮은 블루)</td></tr>
+    <tr><td>Positive</td><td><code class="tag tag-green">#5cb88a</code></td><td>AC·성공</td></tr>
+    <tr><td>Warning</td><td><code class="tag tag-orange">#c9a227</code></td><td>TLE·주의</td></tr>
+    <tr><td>Danger</td><td><code class="tag tag-red">#d4574a</code></td><td>WA·오류</td></tr>
+    <tr><td>단일 탈채도 액센트 (warm chrome)</td><td><code>#c4b49a</code></td><td>탭 인디케이터·소량 하이라이트 전용</td></tr>
+  </table>
+  <p><strong>금지</strong>: 순수 블랙 배경, 보라·마젠타·시안 네온 그라데이션, 다중 비채도 네온 액센트 병치.</p>
+
+  <hr>
+
+  <h2>Typography</h2>
+  <ul>
+    <li><strong>Sans</strong>: <strong>Outfit</strong> (<code>next/font/google</code>) — UI·제목·내비. <strong>Inter 사용 금지.</strong></li>
+    <li><strong>Mono</strong>: <strong>Geist Mono</strong> (<code>next/font/google</code>) — 번호·레이팅·코드 스니펫.</li>
+    <li><strong>스케일</strong>: 본문 14–15px, 페이지 제목 22–28px, <code>tracking-tight</code>는 제목에만.</li>
+    <li><strong>한글</strong>: 시스템 폴백은 유지; 라틴 타이틀과의 굵기 대비는 과하지 않게.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Layout</h2>
+  <ul>
+    <li><strong>그리드 우선</strong>: 목록·랭킹은 <code>table</code> + 명확한 열 위계. 레이아웃 목적의 flex 중첩 최소화.</li>
+    <li><strong>히어로</strong>: <strong><code>min-h-screen</code> / <code>h-screen</code> 금지</strong> — 뷰포트는 <code>min-h-[calc(100dvh-3.5rem)]</code> 등으로 네비를 제외한 잔여 높이 기준.</li>
+    <li><strong>폭</strong>: <code>.container-app</code> max-width 1280px, 좌우 패딩 16→32px (md+).</li>
+  </ul>
+
+  <hr>
+
+  <h2>Motion</h2>
+  <ul>
+    <li><strong>기본</strong>: 150–200ms, <code>ease</code>, <strong>opacity / border-color / background</strong> 위주.</li>
+    <li><strong>페이지 전환</strong>: CSS <code>animate-in</code> 수준만; 의미 없는 연속 모션 금지.</li>
+    <li><strong><code>prefers-reduced-motion: reduce</code></strong>: 전환·애니메이션 최소화 준수.</li>
+    <li><strong>Framer Motion</strong>: 패키지에 포함되어 있으나 <strong>앱 셸·목록에는 사용하지 않음</strong> — 필요 시 클라이언트 국소 위젯에만 격리.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Surfaces &amp; Focus</h2>
+  <ul>
+    <li>카드(<code>.box</code>): <code>background: var(--bg-secondary)</code>, <code>border: 1px solid var(--border-primary)</code>.</li>
+    <li><strong>포커스 링</strong>: <code>outline: 2px solid var(--accent-link)</code> · <code>outline-offset: 2px</code>.</li>
+    <li><strong>링크</strong>: 기본 밑줄은 호버에서만; 본문 링크는 <code>--accent-link</code>.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Anti-patterns (금지)</h2>
+  <ul>
+    <li>UI 문자열/버튼에 <strong>이모지</strong> (데이터 시드의 이모지는 DB에만 두고, 화면은 <strong>slug→아이콘</strong> 매핑).</li>
+    <li><strong>카드 수프</strong>: 의미 없는 다중 카드 그리드·그림자 스택.</li>
+    <li><strong>영어 플레이스홀더 카피</strong> ("Challenges", "Leaderboard") — 자리표시자 대신 <strong>짧은 한국어</strong> 유틸리티 문구.</li>
+    <li><strong>죽은 네비 링크</strong> — 라우트 없으면 노출하지 않음.</li>
+    <li><strong>보라 배지·네온 시안</strong>으로 트랙 구분 (브랜드 팔레트 위반).</li>
+  </ul>
+
+  <hr>
+
+  <h2>Icons</h2>
+  <ul>
+    <li><strong>lucide-react</strong> (기존 의존성)만 최소 사용 — 카테고리 트랙 마크 등.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Implementation Map</h2>
+  <ul>
+    <li>토큰: <code>src/app/globals.css</code> <code>:root</code> + <code>@theme inline</code>.</li>
+    <li>폰트: <code>src/app/layout.tsx</code> (<code>Outfit</code> + <code>Geist_Mono</code> CSS 변수).</li>
+    <li>카테고리 크롬: <code>src/components/category/CategoryTrackIcon.tsx</code>.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제품 요약 — sco</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back">&larr; 문서 목록</a>
+  <div class="header">
+    <h1>sco 제품 요약</h1>
+    <p class="subtitle">owner: product · status: final · last updated: 2026-05-12</p>
+  </div>
+
+  <h2>목적</h2>
+  <p>sco는 알고리즘 문제 풀이와 실력 검증을 위한 온라인 저지 플랫폼입니다. AI 시대에 맞게 "정답을 맞히는 사이트"가 아니라 "sco를 견디는 풀이를 검증하는 사이트"로 설계되었습니다.</p>
+
+  <h2>핵심 목표</h2>
+  <ol>
+    <li>알고리즘 문제를 풀고 코드를 제출하는 온라인 저지 플랫폼</li>
+    <li>일반 AC와 Verified AC를 분리하는 실력 검증 플랫폼</li>
+    <li>풀이자 / 검수자 / 어드민 3개 역할 중심의 운영 구조</li>
+    <li>AI 코드 복붙을 100% 막는 것이 아니라, 이해하지 못한 AI 복붙 사용자가 공식 랭킹과 대회 성과를 쉽게 얻지 못하게 하는 구조</li>
+    <li>한국 시장에 맞는 입문자 온보딩, 상위권 경쟁, 학교/학원/기업 시험 확장 가능성</li>
+  </ol>
+
+  <h2>제품 한 줄 정의</h2>
+  <blockquote><strong>sco를 견디는 풀이 — Counterexample-first judge</strong></blockquote>
+
+  <h2>핵심 차별화</h2>
+
+  <h3>1. 정답 판정과 무결성 판정의 분리</h3>
+  <ul>
+    <li><strong>AC</strong>: 코드가 테스트케이스를 통과한 상태</li>
+    <li><strong>Verified AC</strong>: 코드 통과 + 풀이 설명 + 이해도 질문 + 무결성 점수 기준 이하</li>
+  </ul>
+
+  <h3>2. 다양한 문제 유형</h3>
+  <table>
+    <tr><th>유형</th><th>설명</th></tr>
+    <tr><td>STANDARD</td><td>일반 풀이형</td></tr>
+    <tr><td>VERIFIED</td><td>검증 풀이형</td></tr>
+    <tr><td>CODE_PATCH</td><td>코드 수정형</td></tr>
+    <tr><td>DEBUGGING</td><td>디버깅형</td></tr>
+    <tr><td>COUNTEREXAMPLE</td><td>sco 찾기형</td></tr>
+    <tr><td>INTERACTIVE</td><td>인터랙티브형</td></tr>
+    <tr><td>OPTIMIZATION</td><td>최적화형</td></tr>
+  </table>
+
+  <h3>3. 3가지 역할</h3>
+  <ul>
+    <li><strong>풀이자</strong>: 문제를 풀고 제출하는 일반 사용자</li>
+    <li><strong>검수자</strong>: 문제 품질과 제출 신뢰도를 검토</li>
+    <li><strong>어드민</strong>: 서비스 전체 운영자</li>
+  </ul>
+
+  <h2>디자인 원칙</h2>
+  <h3>톤 &amp; 메시지</h3>
+  <ul>
+    <li>단정함, 냉정함, 기술적, 과장 없음</li>
+    <li>"도구처럼 보이는 제품"</li>
+  </ul>
+
+  <h3>컬러</h3>
+  <ul>
+    <li>Base: 어두운 흑연 단색 (<code>#0F1317</code>, <code>#151A20</code>, <code>#1A2027</code>)</li>
+    <li>Accent: Azure <code class="tag tag-blue">#58A6FF</code> (기본 강조색)</li>
+    <li>Special: Lime <code class="tag tag-green">#C3FF4D</code> (라이브 대회/이벤트용)</li>
+  </ul>
+
+  <h3>UI 원칙</h3>
+  <ul>
+    <li>한 화면에서 강조색은 하나만 사용</li>
+    <li>그라디언트, 과한 네온, 게임 UI 느낌 금지</li>
+    <li>색상만으로 상태를 전달하지 말고 텍스트 배지와 아이콘 함께 사용</li>
+  </ul>
+
+  <h2>기술 스택</h2>
+  <table>
+    <tr><th>레이어</th><th>기술</th></tr>
+    <tr><td>Frontend</td><td>Next.js 16, TypeScript, Tailwind CSS 4</td></tr>
+    <tr><td>Backend</td><td>NestJS</td></tr>
+    <tr><td>Database</td><td>PostgreSQL</td></tr>
+    <tr><td>Cache/Queue</td><td>Redis, BullMQ</td></tr>
+    <tr><td>Judge</td><td>Docker Sandbox</td></tr>
+    <tr><td>Storage</td><td>S3 호환 객체 스토리지</td></tr>
+  </table>
+
+  <h2>개발 로드맵</h2>
+  <h3>MVP</h3>
+  <ul>
+    <li><span class="tag tag-green">완료</span> 회원가입/로그인</li>
+    <li><span class="tag tag-green">완료</span> 문제 목록/상세</li>
+    <li><span class="tag tag-green">완료</span> 코드 에디터</li>
+    <li><span class="tag tag-green">완료</span> 코드 제출/채점 (데모)</li>
+    <li><span class="tag tag-green">완료</span> 기본 랭킹</li>
+    <li><span class="tag tag-red">미구현</span> 풀이 설명 제출</li>
+    <li><span class="tag tag-red">미구현</span> Verified AC 기본 구조</li>
+  </ul>
+
+  <h3>v1</h3>
+  <ul>
+    <li><span class="tag tag-orange">준비 중</span> 대회 기능</li>
+    <li><span class="tag tag-orange">준비 중</span> 스코어보드</li>
+    <li><span class="tag tag-red">미구현</span> 문제별 질문/풀이 공유</li>
+    <li><span class="tag tag-red">미구현</span> 제출 검수</li>
+    <li><span class="tag tag-red">미구현</span> 위험 점수</li>
+  </ul>
+
+  <h3>v2</h3>
+  <ul>
+    <li><span class="tag tag-red">미구현</span> 코드 수정 미션</li>
+    <li><span class="tag tag-red">미구현</span> sco 찾기형 문제</li>
+    <li><span class="tag tag-red">미구현</span> 시즌 랭킹</li>
+    <li><span class="tag tag-red">미구현</span> 학습 로드맵</li>
+    <li><span class="tag tag-red">미구현</span> 조직/학교 기능</li>
+  </ul>
+
+  <h3>v3</h3>
+  <ul>
+    <li><span class="tag tag-red">미구현</span> 감독형 시험 모드</li>
+    <li><span class="tag tag-red">미구현</span> 기업 평가 모드</li>
+    <li><span class="tag tag-red">미구현</span> 인증시험</li>
+    <li><span class="tag tag-red">미구현</span> 고급 무결성 분석</li>
+  </ul>
+
+  <h2>오픈 이슈</h2>
+  <ol>
+    <li>판정 결과에 대한 사용자 항소 절차 상세화</li>
+    <li>대회 중 실시간 무결성 검사 수준 결정</li>
+    <li>기업 시험 모드의 프록터링 범위</li>
+  </ol>
+</div>
+</body>
+</html>

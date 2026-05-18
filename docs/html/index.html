@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sco — 문서</title>
+<style>
+  :root {
+    --bg-base: #0b0d10; --bg-surface: #12151a; --bg-elevated: #181c22;
+    --bg-hover: #222831; --border-subtle: #2a313c; --border-strong: #3a4450;
+    --text-primary: #e8eaed; --text-secondary: #9aa5b1; --text-muted: #6b7785;
+    --accent-link: #89b4d4; --accent-chrome: #c4b49a;
+    --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-sans); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 800px; margin: 0 auto; padding: 64px 24px; }
+  h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 40px; }
+  .list { display: flex; flex-direction: column; gap: 12px; }
+  .card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 20px; transition: border-color 0.15s, background 0.15s; }
+  .card:hover { border-color: var(--accent-link); background: var(--bg-elevated); }
+  .card a { color: var(--text-primary); text-decoration: none; display: block; }
+  .card .title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .card .desc { color: var(--text-secondary); font-size: 13px; }
+  .meta { color: var(--text-muted); font-size: 12px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>sco 문서</h1>
+  <p class="subtitle">System · Coding · Operations</p>
+  <div class="list">
+    <div class="card">
+      <a href="executive-summary.html">
+        <div class="title">제품 요약</div>
+        <div class="desc">sco 플랫폼의 목적, 핵심 차별화, 기술 스택, 로드맵</div>
+        <div class="meta">owner: product · status: final</div>
+      </a>
+    </div>
+    <div class="card">
+      <a href="design-principles.html">
+        <div class="title">디자인 원칙</div>
+        <div class="desc">브랜드 정체성, UI 원칙, 레이아웃 규칙, 접근성 기준</div>
+        <div class="meta">owner: design · status: final</div>
+      </a>
+    </div>
+    <div class="card">
+      <a href="color-palette.html">
+        <div class="title">컬러 팔레트</div>
+        <div class="desc">표준 색상 정의, 배경/텍스트/강조색, 접근성 대비 검증</div>
+        <div class="meta">owner: design · status: final</div>
+      </a>
+    </div>
+    <div class="card">
+      <a href="design-system.html">
+        <div class="title">Design System</div>
+        <div class="desc">전체 디자인 시스템 — 팔레트, 타이포그래피, 레이아웃, 모션</div>
+        <div class="meta">DESIGN_VARIANCE 8 · MOTION 6 · DENSITY 4</div>
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
