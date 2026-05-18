@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Sun, Moon, Menu, X, Crown } from 'lucide-react';
 
 import { logoutAction } from '@/app/actions/auth';
@@ -15,7 +16,10 @@ type Props = {
 export default function Navbar({ user }: Props) {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
   const label = user?.displayName?.trim() || user?.username;
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   return (
     <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)]">
@@ -36,47 +40,15 @@ export default function Navbar({ user }: Props) {
             </Link>
 
             <nav className="hidden md:flex md:items-center md:gap-2">
-              <Link
-                href="/problems"
-                className="px-3 py-2 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
-              >
-                문제
-              </Link>
-              <Link
-                href="/ranking"
-                className="px-3 py-2 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
-              >
-                랭킹
-              </Link>
-              {user ? (
-                <Link
-                  href="/activity"
-                  className="px-3 py-2 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
-                >
-                  활동
-                </Link>
-              ) : null}
-              <Link
-                href="/contests"
-                className="px-3 py-2 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
-              >
-                대회
-              </Link>
-              <Link
-                href="/subscribe"
-                className="px-3 py-2 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors inline-flex items-center gap-1.5"
-              >
+              <Link href="/problems" className={`nav-link ${isActive('/problems') ? 'active' : ''}`}>문제</Link>
+              <Link href="/ranking" className={`nav-link ${isActive('/ranking') ? 'active' : ''}`}>랭킹</Link>
+              {user ? <Link href="/activity" className={`nav-link ${isActive('/activity') ? 'active' : ''}`}>활동</Link> : null}
+              <Link href="/contests" className={`nav-link ${isActive('/contests') ? 'active' : ''}`}>대회</Link>
+              <Link href="/subscribe" className={`nav-link inline-flex items-center gap-1.5 ${isActive('/subscribe') ? 'active' : ''}`}>
                 <Crown size={14} className="text-[var(--accent-warn)]" />
                 구독
               </Link>
-              {user?.role === 'ADMIN' ? (
-                <Link
-                  href="/admin"
-                  className="px-3 py-2 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
-                >
-                  관리
-                </Link>
-              ) : null}
+              {user?.role === 'ADMIN' ? <Link href="/admin" className={`nav-link ${isActive('/admin') ? 'active' : ''}`}>관리</Link> : null}
             </nav>
           </div>
 
@@ -101,13 +73,13 @@ export default function Navbar({ user }: Props) {
               <>
                 <Link
                   href={`/users/${user.username}`}
-                  className="hidden sm:inline max-w-[180px] truncate px-2 py-1.5 text-base font-medium text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
+                  className={`hidden sm:inline max-w-[180px] truncate text-base font-medium nav-link ${isActive(`/users/${user.username}`) ? 'active' : ''}`}
                 >
                   {label}
                 </Link>
                 <Link
                   href="/settings"
-                  className="hidden sm:inline px-2 py-1.5 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
+                  className={`hidden sm:inline text-base nav-link ${isActive('/settings') ? 'active' : ''}`}
                 >
                   설정
                 </Link>
@@ -124,11 +96,11 @@ export default function Navbar({ user }: Props) {
               <>
                 <Link
                   href="/login"
-                  className="hidden sm:inline px-2 py-1.5 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors"
+                  className={`hidden sm:inline text-base nav-link ${isActive('/login') ? 'active' : ''}`}
                 >
                   로그인
                 </Link>
-                <Link href="/register" className="hidden sm:inline px-2 py-1.5 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:no-underline rounded-md transition-colors">
+                <Link href="/register" className={`hidden sm:inline text-base nav-link ${isActive('/register') ? 'active' : ''}`}>
                   회원가입
                 </Link>
               </>
@@ -143,14 +115,14 @@ export default function Navbar({ user }: Props) {
             <Link
               href="/problems"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+              className={`nav-link-mobile ${isActive('/problems') ? 'active' : ''}`}
             >
               문제
             </Link>
             <Link
               href="/ranking"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+              className={`nav-link-mobile ${isActive('/ranking') ? 'active' : ''}`}
             >
               랭킹
             </Link>
@@ -158,7 +130,7 @@ export default function Navbar({ user }: Props) {
               <Link
                 href="/activity"
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+                className={`nav-link-mobile ${isActive('/activity') ? 'active' : ''}`}
               >
                 활동
               </Link>
@@ -166,14 +138,14 @@ export default function Navbar({ user }: Props) {
             <Link
               href="/contests"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+              className={`nav-link-mobile ${isActive('/contests') ? 'active' : ''}`}
             >
               대회
             </Link>
             <Link
               href="/subscribe"
               onClick={() => setMenuOpen(false)}
-              className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors inline-flex items-center gap-2"
+              className={`nav-link-mobile inline-flex items-center gap-2 ${isActive('/subscribe') ? 'active' : ''}`}
             >
               <Crown size={14} className="text-[var(--accent-warn)]" />
               구독
@@ -182,7 +154,7 @@ export default function Navbar({ user }: Props) {
               <Link
                 href="/admin"
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+                className={`nav-link-mobile ${isActive('/admin') ? 'active' : ''}`}
               >
                 관리
               </Link>
@@ -193,21 +165,21 @@ export default function Navbar({ user }: Props) {
                 <Link
                   href={`/users/${user.username}`}
                   onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+                  className={`nav-link-mobile ${isActive(`/users/${user.username}`) ? 'active' : ''}`}
                 >
                   {label}
                 </Link>
                 <Link
                   href="/settings"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+                  className={`nav-link-mobile ${isActive('/settings') ? 'active' : ''}`}
                 >
                   설정
                 </Link>
                 <form action={logoutAction}>
                   <button
                     type="submit"
-                    className="w-full text-left px-4 py-3 text-base text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+                    className="w-full text-left nav-link-mobile text-[var(--text-muted)] hover:text-[var(--text-primary)]"
                   >
                     로그아웃
                   </button>
@@ -218,14 +190,14 @@ export default function Navbar({ user }: Props) {
                 <Link
                   href="/login"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+                  className={`nav-link-mobile ${isActive('/login') ? 'active' : ''}`}
                 >
                   로그인
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-3 text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-md transition-colors"
+                  className={`nav-link-mobile ${isActive('/register') ? 'active' : ''}`}
                 >
                   회원가입
                 </Link>
