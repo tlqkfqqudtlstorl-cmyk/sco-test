@@ -2,16 +2,25 @@ import { Prisma } from '@prisma/client';
 
 import { prisma } from '@/lib/db';
 
+export const TIERS = [
+  { emoji: '🪨', name: '자갈', range: '0–1199', min: 0, max: 1199 },
+  { emoji: '🥚', name: '돌멩이', range: '1200–1399', min: 1200, max: 1399 },
+  { emoji: '🏔️', name: '암석', range: '1400–1599', min: 1400, max: 1599 },
+  { emoji: '💎', name: '광석', range: '1600–1799', min: 1600, max: 1799 },
+  { emoji: '🔮', name: '수정', range: '1800–1999', min: 1800, max: 1999 },
+  { emoji: '💜', name: '자수정', range: '2000–2199', min: 2000, max: 2199 },
+  { emoji: '💙', name: '사파이어', range: '2200–2399', min: 2200, max: 2399 },
+  { emoji: '💠', name: '다이아몬드', range: '2400+', min: 2400, max: Infinity },
+] as const;
+
+export function tierFromRating(rating: number) {
+  return TIERS.find((t) => rating >= t.min && rating <= t.max) ?? TIERS[0];
+}
+
 /** 레이팅 구간 → 티어 라벨 (UI용, DB 컬럼 아님). */
 export function tierLabelFromRating(rating: number): string {
-  if (rating >= 2400) return '그랜드마스터';
-  if (rating >= 2200) return '마스터';
-  if (rating >= 2000) return '다이아';
-  if (rating >= 1800) return '플래티넘';
-  if (rating >= 1600) return '골드';
-  if (rating >= 1400) return '실버';
-  if (rating >= 1200) return '브론즈';
-  return '루키';
+  const t = tierFromRating(rating);
+  return `${t.emoji} ${t.name}`;
 }
 
 export type LeaderboardRow = {

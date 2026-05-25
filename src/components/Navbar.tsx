@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sun, Moon, Menu, X, Crown } from 'lucide-react';
+import { Sun, Moon, Menu, X, Crown, User, Settings, LogOut } from 'lucide-react';
 
 import { logoutAction } from '@/app/actions/auth';
 import { useTheme } from '@/lib/ThemeProvider';
@@ -16,10 +16,23 @@ type Props = {
 export default function Navbar({ user }: Props) {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const label = user?.displayName?.trim() || user?.username;
+  const initial = label?.[0]?.toUpperCase() || '?';
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
 
   return (
     <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)]">
@@ -70,28 +83,54 @@ export default function Navbar({ user }: Props) {
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
             {user ? (
-              <>
-                <Link
-                  href={`/users/${user.username}`}
-                  className={`hidden sm:inline max-w-[180px] truncate text-base font-medium nav-link ${isActive(`/users/${user.username}`) ? 'active' : ''}`}
+              <div className="relative" ref={profileRef}>
+                <button
+                  type="button"
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg-tertiary)] text-sm font-bold text-[var(--text-primary)] hover:ring-2 hover:ring-[var(--border-strong)] transition-all overflow-hidden"
                 >
-                  {label}
-                </Link>
-                <Link
-                  href="/settings"
-                  className={`hidden sm:inline text-base nav-link ${isActive('/settings') ? 'active' : ''}`}
-                >
-                  설정
-                </Link>
-                <form action={logoutAction} className="hidden sm:block">
-                  <button
-                    type="submit"
-                    className="px-2 py-1.5 text-base text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] rounded-md transition-colors"
-                  >
-                    로그아웃
-                  </button>
-                </form>
-              </>
+                  {user?.avatarUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={user.avatarUrl} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    initial
+                  )}
+                </button>
+                {profileOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] shadow-xl z-50 py-2">
+                    <div className="px-4 py-3 border-b border-[var(--border-primary)]">
+                      <p className="text-sm font-semibold text-[var(--text-primary)] truncate">{label}</p>
+                      <p className="text-xs text-[var(--text-muted)] truncate">@{user.username}</p>
+                    </div>
+                    <Link
+                      href={`/users/${user.username}`}
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)] no-underline transition-colors"
+                    >
+                      <User size={16} />
+                      프로필
+                    </Link>
+                    <Link
+                      href="/settings"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)] no-underline transition-colors"
+                    >
+                      <Settings size={16} />
+                      설정
+                    </Link>
+
+                    <form action={logoutAction} className="border-t border-[var(--border-primary)] pt-1 mt-1">
+                      <button
+                        type="submit"
+                        className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)] transition-colors"
+                      >
+                        <LogOut size={16} />
+                        로그아웃
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
             ) : (
               <>
                 <Link

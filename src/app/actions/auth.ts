@@ -185,6 +185,48 @@ export async function changePasswordAction(
   return { ok: true };
 }
 
+export async function uploadAvatarAction(
+  formData: FormData,
+): Promise<{ error?: string; url?: string }> {
+  try {
+    const session = await getIronSessionTyped();
+    if (!session.userId) return { error: '로그인이 필요합니다.' };
+
+    const file = formData.get('avatar') as File | null;
+    if (!file || file.size === 0) return { error: '파일을 선택하세요.' };
+
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) return { error: '파일 크기는 2MB 이하만 가능합니다.' };
+
+    const type = file.type;
+    if (!['image/png', 'image/jpeg', 'image/gif', 'image/webp'].includes(type)) {
+      return { error: '지원 형식: png, jpg, gif, webp' };
+    }
+
+    const buf = await file.arrayBuffer();
+    const base64 = Buffer.from(new Uint8Array(buf)).toString('base64');
+    const dataUrl = `data:${type};base64,${base64}`;
+
+    await prisma.user.update({
+      where: { id: session.userId },
+      data: { avatarUrl: dataUrl },
+    });
+
+    const user = await prisma.user.findUnique({
+      where: { id: session.userId },
+      select: { username: true },
+    });
+
+    revalidatePath('/settings');
+    if (user) revalidatePath(`/users/${user.username}`);
+
+    return { url: dataUrl };
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : '알 수 없는 오류';
+    return { error: `업로드 실패: ${msg}` };
+  }
+}
+
 /** 제출 기준으로 solved·rating 재계산 (설정 화면에서 호출) */
 export async function syncStatsForCurrentUser(
   _formData?: FormData,
