@@ -37,18 +37,18 @@ export default function Navbar({ user }: Props) {
   return (
     <header className="border-b border-[var(--border-primary)] bg-[var(--bg-primary)]">
       <div className="container-app">
-        <div className="flex h-24 items-center justify-between gap-6">
-          <div className="flex min-w-0 items-center gap-10">
+        <div className="flex h-14 items-center justify-between gap-4">
+          <div className="flex min-w-0 items-center gap-6">
             <Link href="/" className="flex shrink-0 items-center gap-2 hover:no-underline">
               <span
-                className={`flex h-14 w-14 items-center justify-center rounded-xl border ${
+                className={`flex h-9 w-9 items-center justify-center rounded-lg border ${
                   theme === 'dark'
                     ? 'bg-white border-[var(--border-strong)]'
                     : 'bg-black border-[var(--border-strong)]'
                 }`}
                 aria-hidden
               >
-                <span className={`text-2xl font-extrabold leading-none tracking-tight ${theme === 'dark' ? 'text-black' : 'text-white'}`}>sco</span>
+                <span className={`text-base font-extrabold leading-none tracking-tight ${theme === 'dark' ? 'text-black' : 'text-white'}`}>sco</span>
               </span>
             </Link>
 
@@ -65,14 +65,14 @@ export default function Navbar({ user }: Props) {
             </nav>
           </div>
 
-          <div className="flex shrink-0 items-center gap-5">
+          <div className="flex shrink-0 items-center gap-3">
             <button
               type="button"
               onClick={toggleTheme}
               className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors p-1"
               aria-label="테마 전환"
             >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
             </button>
             <button
               type="button"
@@ -80,14 +80,14 @@ export default function Navbar({ user }: Props) {
               className="md:hidden text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors p-1"
               aria-label="메뉴"
             >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
             {user ? (
               <div className="relative" ref={profileRef}>
                 <button
                   type="button"
                   onClick={() => setProfileOpen(!profileOpen)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--bg-tertiary)] text-sm font-bold text-[var(--text-primary)] hover:ring-2 hover:ring-[var(--border-strong)] transition-all overflow-hidden"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--bg-tertiary)] text-xs font-bold text-[var(--text-primary)] hover:ring-2 hover:ring-[var(--border-strong)] transition-all overflow-hidden"
                 >
                   {user?.avatarUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -135,11 +135,11 @@ export default function Navbar({ user }: Props) {
               <>
                 <Link
                   href="/login"
-                  className={`hidden sm:inline text-base nav-link ${isActive('/login') ? 'active' : ''}`}
+                  className={`hidden sm:inline nav-link ${isActive('/login') ? 'active' : ''}`}
                 >
                   로그인
                 </Link>
-                <Link href="/register" className={`hidden sm:inline text-base nav-link ${isActive('/register') ? 'active' : ''}`}>
+                <Link href="/register" className={`hidden sm:inline nav-link ${isActive('/register') ? 'active' : ''}`}>
                   회원가입
                 </Link>
               </>

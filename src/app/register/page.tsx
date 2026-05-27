@@ -4,7 +4,12 @@ export const metadata = {
   title: '회원가입',
 };
 
-export default function RegisterPage() {
+export default async function RegisterPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const sp = await searchParams;
   return (
     <div className="min-h-[calc(100dvh-3.5rem)] bg-[var(--bg-primary)]">
       <div className="container-app py-12">
@@ -16,7 +21,7 @@ export default function RegisterPage() {
             회원가입
           </h1>
         </header>
-        <RegisterForm />
+        <RegisterForm error={sp.error} />
       </div>
     </div>
   );

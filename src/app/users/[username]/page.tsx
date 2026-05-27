@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Mail, Globe, Calendar, Trophy, CheckCircle, Clock, ExternalLink, Code2, MapPin, Medal, Target } from 'lucide-react';
+import { Mail, Globe, Calendar, Trophy, CheckCircle, Clock, Code2, MapPin, Medal, Target } from 'lucide-react';
 
 import { tierFromRating } from '@/lib/ranking-db';
 import { getPublicProfileByUsername } from '@/lib/profile-db';

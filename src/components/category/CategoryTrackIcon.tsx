@@ -4,14 +4,10 @@ import type { LucideIcon } from 'lucide-react';
 import {
   BarChart3,
   Braces,
-  Cloud,
   Coffee,
   Cpu,
   Database,
   FileCode2,
-  Flag,
-  Network,
-  Shield,
 } from 'lucide-react';
 
 const bySlug: Record<string, LucideIcon> = {
@@ -20,11 +16,7 @@ const bySlug: Record<string, LucideIcon> = {
   javascript: FileCode2,
   cpp: Cpu,
   java: Coffee,
-  cloud: Cloud,
-  network: Network,
   database: Database,
-  security: Shield,
-  ctf: Flag,
 };
 
 type Props = {

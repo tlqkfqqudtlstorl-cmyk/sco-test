@@ -5,6 +5,8 @@ import ThemeProvider from "@/lib/ThemeProvider";
 import { getCurrentUserOptional } from "@/lib/auth/current-user";
 import "./globals.css";
 
+export const dynamic = 'force-dynamic';
+
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
     default: "sco",
     template: "%s · sco",
   },
-  description: "sco·검증 중심의 알고리즘·보안·인프라 연습 저지",
+  description: "sco·프로그래밍 문제 풀이와 채점을 위한 온라인 저지",
 };
 
 export default async function RootLayout({
@@ -32,7 +34,11 @@ export default async function RootLayout({
   const user = await getCurrentUserOptional();
 
   return (
-      <html lang="ko" className={`${outfit.variable} ${geistMono.variable}`}>
+      <html
+        lang="ko"
+        className={`${outfit.variable} ${geistMono.variable}`}
+        suppressHydrationWarning
+      >
       <body className="min-h-dvh bg-[var(--bg-primary)] font-sans antialiased">
         <ThemeProvider>
           <Navbar user={user} />

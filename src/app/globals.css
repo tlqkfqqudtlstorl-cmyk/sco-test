@@ -496,9 +496,9 @@ tr:hover td {
 }
 
 .nav-link {
-  padding: 8px 12px;
+  padding: 5px 9px;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
   color: var(--text-secondary);
@@ -517,9 +517,9 @@ tr:hover td {
 
 .nav-link-mobile {
   display: block;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
   color: var(--text-secondary);

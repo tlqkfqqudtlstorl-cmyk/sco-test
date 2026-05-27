@@ -2,7 +2,7 @@ import { prisma } from '@/lib/db';
 
 const BASE_RATING = 1200;
 
-/** 난이도별 첫 AC 시 레이팅 가산(데모 규칙, 추후 ELO 등으로 교체 가능). */
+/** 난이도별 첫 AC 시 레이팅 가산. */
 export function ratingGainForDifficulty(difficulty: string): number {
   switch (difficulty) {
     case 'EASY':

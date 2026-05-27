@@ -4,16 +4,13 @@ import { revalidatePath } from 'next/cache';
 
 import { getIronSessionTyped } from '@/lib/auth/session';
 import { prisma } from '@/lib/db';
+import { assessSubmissionIntegrity } from '@/lib/integrity';
+import { judgeSubmission, statusLabel } from '@/lib/judge';
 import { recalculateUserStats } from '@/lib/user-stats';
 
-const DEMO_AC_MARKER = '__DEMO_AC__';
 const MAX_CODE_LENGTH = 512_000;
 
-/**
- * 데모 제출: 로그인 필수. 실제 채점기 없이 DB 기록 후 `__DEMO_AC__` 포함 시 AC.
- * TODO: 실제 샌드박스 채점 연동 시 판정 분기만 교체.
- */
-export async function submitDemoCode(input: {
+export async function submitCode(input: {
   problemId: string;
   language: string;
   code: string;
@@ -40,31 +37,63 @@ export async function submitDemoCode(input: {
   if (input.code.length > MAX_CODE_LENGTH) {
     return { ok: false, message: '코드가 너무 깁니다.' };
   }
+  if (input.code.trim().length === 0) {
+    return { ok: false, message: '제출할 코드가 비어 있습니다.' };
+  }
 
   const problem = await prisma.problem.findUnique({
     where: { id: input.problemId },
+    include: { testCases: { orderBy: { order: 'asc' } } },
   });
   if (!problem) {
     return { ok: false, message: '문제를 찾을 수 없습니다.' };
   }
 
-  const isAc = input.code.includes(DEMO_AC_MARKER);
-  const status = isAc ? 'AC' : 'WA';
-  const execTime = isAc ? 12 + Math.floor(Math.random() * 40) : undefined;
-  const memory = isAc ? 2048 + Math.floor(Math.random() * 4096) : undefined;
+  const judge = await judgeSubmission({
+    language: input.language,
+    code: input.code,
+    timeLimitMs: problem.timeLimit,
+    memoryLimitMb: problem.memoryLimit,
+    testcases: problem.testCases.map((tc) => ({
+      id: tc.id,
+      input: tc.input,
+      output: tc.output,
+    })),
+  });
+  const isAc = judge.status === 'AC';
+  const integrity = assessSubmissionIntegrity({
+    code: input.code,
+    language: input.language,
+    status: judge.status,
+  });
 
   await prisma.$transaction(async (tx) => {
-    await tx.submission.create({
+    const submission = await tx.submission.create({
       data: {
         userId: user.id,
         problemId: problem.id,
         language: input.language,
         code: input.code,
-        status,
-        execTime: execTime ?? null,
-        memory: memory ?? null,
+        codeLength: input.code.length,
+        status: judge.status,
+        verificationStatus: isAc && problem.type === 'VERIFIED' ? 'PENDING_EXPLANATION' : 'NOT_REQUIRED',
+        integrityScore: integrity.score,
+        integrityFlags: JSON.stringify(integrity.flags),
+        execTime: judge.execTime ?? null,
+        memory: judge.memory ?? null,
+        judgedAt: new Date(),
       },
     });
+    if (integrity.score >= 25) {
+      await tx.reviewCase.create({
+        data: {
+          submissionId: submission.id,
+          riskScore: integrity.score,
+          riskLevel: integrity.level,
+          signals: { create: integrity.signals },
+        },
+      });
+    }
 
     await tx.problem.update({
       where: { id: problem.id },
@@ -86,11 +115,11 @@ export async function submitDemoCode(input: {
 
   return {
     ok: true,
-    status: isAc ? '맞았습니다' : '틀렸습니다',
-    execTime,
-    memory,
-    message: isAc
-      ? `AC! 코드에 "${DEMO_AC_MARKER}"가 있으면 데모 채점에서 항상 통과합니다.`
-      : `WA. 데모 AC를 보려면 코드 어딘가에 ${DEMO_AC_MARKER} 를 넣어 제출하세요.`,
+    status: statusLabel(judge.status),
+    execTime: judge.execTime,
+    memory: judge.memory,
+    message: judge.message,
   };
 }
+
+export const submitDemoCode = submitCode;

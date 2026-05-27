@@ -1,0 +1,657 @@
+{
+  "ranges": [
+    {
+      "start": 1001,
+      "count": 60,
+      "category": "algorithm",
+      "subCategory": "data-structure",
+      "titlePrefix": "자료구조 스택·큐",
+      "difficulties": [
+        "EASY",
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "자료구조"
+      ]
+    },
+    {
+      "start": 1061,
+      "count": 40,
+      "category": "algorithm",
+      "subCategory": "graph",
+      "titlePrefix": "그래프 탐색",
+      "difficulties": [
+        "EASY",
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "BFS",
+        "DFS"
+      ]
+    },
+    {
+      "start": 1101,
+      "count": 36,
+      "category": "algorithm",
+      "subCategory": "dp",
+      "titlePrefix": "DP 카드",
+      "difficulties": [
+        "EASY",
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "DP"
+      ]
+    },
+    {
+      "start": 1137,
+      "count": 30,
+      "category": "algorithm",
+      "subCategory": "greedy",
+      "titlePrefix": "그리디",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "그리디"
+      ]
+    },
+    {
+      "start": 1167,
+      "count": 28,
+      "category": "algorithm",
+      "subCategory": "binary-search",
+      "titlePrefix": "이분탐색",
+      "difficulties": [
+        "EASY",
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "이분탐색"
+      ]
+    },
+    {
+      "start": 1195,
+      "count": 24,
+      "category": "algorithm",
+      "subCategory": "bitmask",
+      "titlePrefix": "비트 연산",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "비트"
+      ]
+    },
+    {
+      "start": 1219,
+      "count": 22,
+      "category": "algorithm",
+      "subCategory": "geometry",
+      "titlePrefix": "좌표·CCW",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "기하"
+      ]
+    },
+    {
+      "start": 1241,
+      "count": 22,
+      "category": "algorithm",
+      "subCategory": "two-pointer",
+      "titlePrefix": "투 포인터",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "투포인터"
+      ]
+    },
+    {
+      "start": 1263,
+      "count": 20,
+      "category": "algorithm",
+      "subCategory": "shortest-path",
+      "titlePrefix": "최단경로",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "다익스트라"
+      ]
+    },
+    {
+      "start": 1283,
+      "count": 18,
+      "category": "algorithm",
+      "subCategory": "mst",
+      "titlePrefix": "신장트리",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "크루스칼"
+      ]
+    },
+    {
+      "start": 1301,
+      "count": 16,
+      "category": "algorithm",
+      "subCategory": "max-flow",
+      "titlePrefix": "유량",
+      "difficulties": [
+        "HARD"
+      ],
+      "tags": [
+        "디닉"
+      ]
+    },
+    {
+      "start": 1317,
+      "count": 20,
+      "category": "algorithm",
+      "subCategory": "string",
+      "titlePrefix": "문자열",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "KMP",
+        "해시"
+      ]
+    },
+    {
+      "start": 1337,
+      "count": 18,
+      "category": "algorithm",
+      "subCategory": "number-theory",
+      "titlePrefix": "정수론",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "소수"
+      ]
+    },
+    {
+      "start": 1355,
+      "count": 16,
+      "category": "algorithm",
+      "subCategory": "game-theory",
+      "titlePrefix": "게임",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "님"
+      ]
+    },
+    {
+      "start": 1371,
+      "count": 14,
+      "category": "algorithm",
+      "subCategory": "segtree",
+      "titlePrefix": "세그먼트",
+      "difficulties": [
+        "HARD"
+      ],
+      "tags": [
+        "lazy"
+      ]
+    },
+    {
+      "start": 2001,
+      "count": 24,
+      "category": "python",
+      "subCategory": "python-basic",
+      "titlePrefix": "Python 기초",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "python"
+      ]
+    },
+    {
+      "start": 2025,
+      "count": 16,
+      "category": "python",
+      "subCategory": "python-string",
+      "titlePrefix": "Python 문자열",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "python"
+      ]
+    },
+    {
+      "start": 2041,
+      "count": 14,
+      "category": "python",
+      "subCategory": "python-list",
+      "titlePrefix": "리스트 처리",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "list"
+      ]
+    },
+    {
+      "start": 2055,
+      "count": 12,
+      "category": "python",
+      "subCategory": "python-dict",
+      "titlePrefix": "딕셔너리",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "dict"
+      ]
+    },
+    {
+      "start": 2067,
+      "count": 10,
+      "category": "python",
+      "subCategory": "python-class",
+      "titlePrefix": "클래스",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "OOP"
+      ]
+    },
+    {
+      "start": 3001,
+      "count": 18,
+      "category": "javascript",
+      "subCategory": "js-basic",
+      "titlePrefix": "JS 기초",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "js"
+      ]
+    },
+    {
+      "start": 3019,
+      "count": 14,
+      "category": "javascript",
+      "subCategory": "js-async",
+      "titlePrefix": "Promise·async",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "async"
+      ]
+    },
+    {
+      "start": 3033,
+      "count": 12,
+      "category": "javascript",
+      "subCategory": "ts-intro",
+      "titlePrefix": "TS 타입",
+      "difficulties": [
+        "MEDIUM"
+      ],
+      "tags": [
+        "typescript"
+      ]
+    },
+    {
+      "start": 3045,
+      "count": 10,
+      "category": "javascript",
+      "subCategory": "nodejs-io",
+      "titlePrefix": "Node 스트림",
+      "difficulties": [
+        "MEDIUM"
+      ],
+      "tags": [
+        "node"
+      ]
+    },
+    {
+      "start": 4001,
+      "count": 20,
+      "category": "cpp",
+      "subCategory": "cpp-basic",
+      "titlePrefix": "C++ 입출력",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "cpp"
+      ]
+    },
+    {
+      "start": 4021,
+      "count": 18,
+      "category": "cpp",
+      "subCategory": "cpp-stl",
+      "titlePrefix": "STL 조합",
+      "difficulties": [
+        "EASY",
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "STL"
+      ]
+    },
+    {
+      "start": 4039,
+      "count": 12,
+      "category": "cpp",
+      "subCategory": "cpp-template",
+      "titlePrefix": "템플릿 메타",
+      "difficulties": [
+        "HARD"
+      ],
+      "tags": [
+        "TMP"
+      ]
+    },
+    {
+      "start": 5001,
+      "count": 16,
+      "category": "java",
+      "subCategory": "java-basic",
+      "titlePrefix": "Java 기초",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "java"
+      ]
+    },
+    {
+      "start": 5017,
+      "count": 14,
+      "category": "java",
+      "subCategory": "java-collection",
+      "titlePrefix": "컬렉션",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "java"
+      ]
+    },
+    {
+      "start": 5031,
+      "count": 12,
+      "category": "java",
+      "subCategory": "java-stream",
+      "titlePrefix": "스트림 API",
+      "difficulties": [
+        "MEDIUM"
+      ],
+      "tags": [
+        "stream"
+      ]
+    },
+    {
+      "start": 1385,
+      "count": 30,
+      "category": "algorithm",
+      "subCategory": "recursion",
+      "titlePrefix": "재귀와 분할정복",
+      "difficulties": [
+        "EASY",
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "재귀",
+        "분할정복"
+      ]
+    },
+    {
+      "start": 1415,
+      "count": 28,
+      "category": "algorithm",
+      "subCategory": "sorting",
+      "titlePrefix": "정렬 응용",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "정렬"
+      ]
+    },
+    {
+      "start": 1443,
+      "count": 28,
+      "category": "algorithm",
+      "subCategory": "search",
+      "titlePrefix": "탐색 응용",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "탐색"
+      ]
+    },
+    {
+      "start": 1471,
+      "count": 24,
+      "category": "algorithm",
+      "subCategory": "math",
+      "titlePrefix": "수학 구현",
+      "difficulties": [
+        "EASY",
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "수학"
+      ]
+    },
+    {
+      "start": 1495,
+      "count": 20,
+      "category": "algorithm",
+      "subCategory": "tree",
+      "titlePrefix": "트리 순회",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "트리"
+      ]
+    },
+    {
+      "start": 1515,
+      "count": 18,
+      "category": "algorithm",
+      "subCategory": "geometry",
+      "titlePrefix": "기하 구현",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "기하"
+      ]
+    },
+    {
+      "start": 2077,
+      "count": 18,
+      "category": "python",
+      "subCategory": "python-function",
+      "titlePrefix": "Python 함수",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "python",
+        "function"
+      ]
+    },
+    {
+      "start": 2095,
+      "count": 18,
+      "category": "python",
+      "subCategory": "python-stdlib",
+      "titlePrefix": "Python 표준 라이브러리",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "python",
+        "stdlib"
+      ]
+    },
+    {
+      "start": 3055,
+      "count": 18,
+      "category": "javascript",
+      "subCategory": "js-basic",
+      "titlePrefix": "JS 배열과 객체",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "js",
+        "array"
+      ]
+    },
+    {
+      "start": 3073,
+      "count": 16,
+      "category": "javascript",
+      "subCategory": "ts-intro",
+      "titlePrefix": "TypeScript 타입 좁히기",
+      "difficulties": [
+        "MEDIUM"
+      ],
+      "tags": [
+        "typescript"
+      ]
+    },
+    {
+      "start": 4051,
+      "count": 18,
+      "category": "cpp",
+      "subCategory": "cpp-lambda",
+      "titlePrefix": "C++ 람다와 알고리즘",
+      "difficulties": [
+        "MEDIUM"
+      ],
+      "tags": [
+        "cpp",
+        "lambda"
+      ]
+    },
+    {
+      "start": 4069,
+      "count": 16,
+      "category": "cpp",
+      "subCategory": "cpp-move",
+      "titlePrefix": "C++ 값과 참조",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "cpp",
+        "reference"
+      ]
+    },
+    {
+      "start": 5043,
+      "count": 18,
+      "category": "java",
+      "subCategory": "java-oop",
+      "titlePrefix": "Java 객체지향",
+      "difficulties": [
+        "EASY",
+        "MEDIUM"
+      ],
+      "tags": [
+        "java",
+        "oop"
+      ]
+    },
+    {
+      "start": 5061,
+      "count": 16,
+      "category": "java",
+      "subCategory": "java-concurrent",
+      "titlePrefix": "Java 동시성 기초",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "java",
+        "concurrent"
+      ]
+    },
+    {
+      "start": 8025,
+      "count": 20,
+      "category": "database",
+      "subCategory": "db-indexing",
+      "titlePrefix": "인덱스와 조회 비용",
+      "difficulties": [
+        "MEDIUM",
+        "HARD"
+      ],
+      "tags": [
+        "index"
+      ]
+    },
+    {
+      "start": 8045,
+      "count": 18,
+      "category": "database",
+      "subCategory": "db-transactions",
+      "titlePrefix": "트랜잭션 상태 판별",
+      "difficulties": [
+        "MEDIUM"
+      ],
+      "tags": [
+        "transaction"
+      ]
+    }
+  ],
+  "singles": []
+}

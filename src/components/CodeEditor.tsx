@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Editor from '@monaco-editor/react';
-import { submitDemoCode } from '@/app/actions/submission';
+import { submitCode } from '@/app/actions/submission';
 import { useTheme } from '@/lib/ThemeProvider';
 import { ProblemClient } from '@/types';
 
@@ -21,7 +21,7 @@ def solve():
 if __name__ == "__main__":
     solve()
 `,
-  cpp: `#include <bits/stdc++.h>
+  cpp: `#include <iostream>
 using namespace std;
 
 int main() {
@@ -108,9 +108,12 @@ export default function CodeEditor({
 
   useEffect(() => {
     localStorage.setItem(storageKey(problem.id, lang), code);
-    setSaved(true);
-    const timer = setTimeout(() => setSaved(false), 2000);
-    return () => clearTimeout(timer);
+    const showTimer = setTimeout(() => setSaved(true), 0);
+    const hideTimer = setTimeout(() => setSaved(false), 2000);
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
   }, [code, lang, problem.id]);
 
   const switchLang = (newLang: string) => {
@@ -125,16 +128,7 @@ export default function CodeEditor({
   };
 
   const handleRun = () => {
-    setRunning(true);
-    setResult(null);
-    setTimeout(() => {
-      setRunning(false);
-      setResult({
-        status: '실행 완료(클라이언트)',
-        time: Math.floor(Math.random() * 100),
-        memory: Math.floor(Math.random() * 10000),
-      });
-    }, 800);
+    handleSubmit();
   };
 
   const handleSubmit = useCallback(async () => {
@@ -147,7 +141,7 @@ export default function CodeEditor({
     }
     setRunning(true);
     setResult(null);
-    const res = await submitDemoCode({
+    const res = await submitCode({
       problemId: problem.id,
       language: lang,
       code,

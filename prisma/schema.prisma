@@ -51,6 +51,7 @@ model Problem {
   inputDesc        String
   outputDesc       String
   examples         String
+  imageUrl         String?
   type             String        @default("STANDARD")
   premium          Boolean       @default(false)
   status           String        @default("PUBLISHED")
@@ -59,10 +60,80 @@ model Problem {
   submitCount      Int           @default(0)
   acCount          Int           @default(0)
   submissions      Submission[]
+  testCases        TestCase[]
+  contestProblems  ContestProblem[]
+  understandingQuestions UnderstandingQuestion[]
+  codePatchMissions CodePatchMission[]
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
 
   @@map("problems")
+}
+
+model Contest {
+  id              String                 @id @default(cuid())
+  slug            String                 @unique
+  title           String
+  description     String
+  format          String                 @default("ICPC")
+  status          String                 @default("UPCOMING")
+  startTime       DateTime
+  endTime         DateTime
+  freezeTime      DateTime?
+  isPublic        Boolean                @default(true)
+  isRated         Boolean                @default(false)
+  maxParticipants Int?
+  createdById     String?
+  createdBy       User?                  @relation("ContestCreator", fields: [createdById], references: [id])
+  problems        ContestProblem[]
+  participants    ContestParticipation[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  @@map("contests")
+}
+
+model ContestProblem {
+  id        String  @id @default(cuid())
+  contestId String
+  contest   Contest @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  problemId String
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  label     String
+  points    Int     @default(1)
+  order     Int     @default(0)
+
+  @@unique([contestId, problemId])
+  @@unique([contestId, label])
+  @@map("contest_problems")
+}
+
+model ContestParticipation {
+  id                     String   @id @default(cuid())
+  contestId              String
+  contest                Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  userId                 String
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  registeredAt           DateTime @default(now())
+  isDisqualified         Boolean  @default(false)
+  disqualificationReason String?
+
+  @@unique([contestId, userId])
+  @@map("contest_participations")
+}
+
+model TestCase {
+  id          String   @id @default(cuid())
+  problemId   String
+  problem     Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  input       String
+  output      String
+  sample      Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@index([problemId])
+  @@map("test_cases")
 }
 
 model SubscriptionPlan {
@@ -72,6 +143,7 @@ model SubscriptionPlan {
   description String?
   features    String   @default("[]")
   subscriptions UserSubscription[]
+  payments    Payment[]
   createdAt   DateTime @default(now())
 
   @@map("subscription_plans")
@@ -87,10 +159,32 @@ model UserSubscription {
   startDate      DateTime         @default(now())
   endDate        DateTime?
   paymentMethod  String?
+  payments       Payment[]
   createdAt      DateTime         @default(now())
 
   @@unique([userId, planId])
   @@map("user_subscriptions")
+}
+
+model Payment {
+  id             String            @id @default(cuid())
+  userId         String
+  user           User              @relation(fields: [userId], references: [id])
+  subscriptionId String?
+  subscription   UserSubscription? @relation(fields: [subscriptionId], references: [id])
+  planId         String
+  plan           SubscriptionPlan  @relation(fields: [planId], references: [id])
+  amount         Int
+  method         String
+  status         String            @default("PAID")
+  providerRef    String            @unique
+  paidAt         DateTime          @default(now())
+  cancelledAt    DateTime?
+  createdAt      DateTime          @default(now())
+
+  @@index([userId])
+  @@index([planId])
+  @@map("payments")
 }
 
 model User {
@@ -110,6 +204,11 @@ model User {
   bio            String?
   submissions    Submission[]
   subscriptions  UserSubscription[]
+  payments       Payment[]
+  contestEntries ContestParticipation[]
+  createdContests Contest[]    @relation("ContestCreator")
+  assignedReviews ReviewCase[] @relation("ReviewAssignee")
+  reviewDecisions ReviewDecision[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 
@@ -124,11 +223,120 @@ model Submission {
   problem     Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
   language    String
   code        String
+  codeLength  Int      @default(0)
   status      String
+  verificationStatus String @default("NOT_REQUIRED")
+  integrityScore Int   @default(0)
+  integrityFlags String @default("[]")
   execTime    Int?
   memory      Int?
+  judgedAt    DateTime?
+  explanation SubmissionExplanation?
+  understandingAnswers UnderstandingAnswer[]
+  reviewCase  ReviewCase?
   createdAt   DateTime @default(now())
 
   @@index([userId, problemId])
   @@map("submissions")
+}
+
+model SubmissionExplanation {
+  id              String     @id @default(cuid())
+  submissionId    String     @unique
+  submission      Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  algorithm       String
+  coreIdea        String
+  timeComplexity  String
+  spaceComplexity String
+  counterexamples String
+  justification   String
+  createdAt       DateTime   @default(now())
+
+  @@map("submission_explanations")
+}
+
+model UnderstandingQuestion {
+  id            String                @id @default(cuid())
+  problemId     String
+  problem       Problem               @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  question      String
+  type          String                @default("SHORT_ANSWER")
+  options       String                @default("[]")
+  correctAnswer String
+  answers       UnderstandingAnswer[]
+  createdAt     DateTime              @default(now())
+
+  @@index([problemId])
+  @@map("understanding_questions")
+}
+
+model UnderstandingAnswer {
+  id           String                @id @default(cuid())
+  questionId   String
+  question     UnderstandingQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  submissionId String
+  submission   Submission            @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  answer       String
+  isCorrect    Boolean
+  createdAt    DateTime              @default(now())
+
+  @@unique([questionId, submissionId])
+  @@map("understanding_answers")
+}
+
+model CodePatchMission {
+  id               String   @id @default(cuid())
+  problemId        String
+  problem          Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  description      String
+  modificationHint String
+  testInput        String
+  expectedOutput   String
+  createdAt        DateTime @default(now())
+
+  @@index([problemId])
+  @@map("code_patch_missions")
+}
+
+model IntegritySignal {
+  id           String     @id @default(cuid())
+  reviewCaseId String
+  reviewCase   ReviewCase @relation(fields: [reviewCaseId], references: [id], onDelete: Cascade)
+  type         String
+  value        Int
+  weight       Int
+  description  String
+  createdAt    DateTime   @default(now())
+
+  @@map("integrity_signals")
+}
+
+model ReviewCase {
+  id           String           @id @default(cuid())
+  submissionId String           @unique
+  submission   Submission       @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  reviewerId   String?
+  reviewer     User?            @relation("ReviewAssignee", fields: [reviewerId], references: [id])
+  status       String           @default("PENDING")
+  riskScore    Int              @default(0)
+  riskLevel    String           @default("LOW")
+  signals      IntegritySignal[]
+  decision     ReviewDecision?
+  createdAt    DateTime         @default(now())
+  resolvedAt   DateTime?
+
+  @@map("review_cases")
+}
+
+model ReviewDecision {
+  id           String     @id @default(cuid())
+  reviewCaseId String     @unique
+  reviewCase   ReviewCase @relation(fields: [reviewCaseId], references: [id], onDelete: Cascade)
+  action       String
+  reason       String
+  decidedById  String
+  decidedBy    User       @relation(fields: [decidedById], references: [id])
+  decidedAt    DateTime   @default(now())
+
+  @@map("review_decisions")
 }

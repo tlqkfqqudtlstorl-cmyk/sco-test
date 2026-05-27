@@ -16,6 +16,7 @@ type Plan = {
 
 type Sub = {
   id: string;
+  planId: string;
   status: string;
   endDate: Date | null;
   paymentMethod: string | null;
@@ -242,7 +243,7 @@ export default function SubscribeClient({ plans, currentSub }: Props) {
       )}
 
       <p className="text-center text-xs text-[var(--text-muted)]">
-        결제는 데모 모드입니다. 실제 결제가 이루어지지 않습니다.
+        결제 기록은 로컬 결제 원장에 저장됩니다.
       </p>
     </div>
   );

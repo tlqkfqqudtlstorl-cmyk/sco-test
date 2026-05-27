@@ -1,39 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
-import { registerAction } from '@/app/actions/auth';
+import { registerRedirectAction } from '@/app/actions/auth';
 
-export default function RegisterForm() {
-  const router = useRouter();
-  const [error, setError] = useState('');
-  const [pending, setPending] = useState(false);
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError('');
-    setPending(true);
-    const fd = new FormData(e.currentTarget);
-    try {
-      const res = await registerAction(null, fd);
-      if (res?.error) {
-        setError(res.error);
-        setPending(false);
-        return;
-      }
-      if (res?.ok) {
-        router.refresh();
-        router.push('/');
-      }
-    } finally {
-      setPending(false);
-    }
-  }
-
+export default function RegisterForm({ error = '' }: { error?: string }) {
   return (
-    <form onSubmit={onSubmit} className="space-y-4 max-w-md">
+    <form action={registerRedirectAction} className="space-y-4 max-w-md">
       <div>
         <label className="block text-xs font-medium text-[var(--text-muted)] mb-1.5">
           아이디
@@ -82,8 +56,8 @@ export default function RegisterForm() {
           {error}
         </p>
       ) : null}
-      <button type="submit" disabled={pending} className="btn-primary w-full">
-        {pending ? '처리 중…' : '가입하기'}
+      <button type="submit" className="btn-primary w-full">
+        가입하기
       </button>
       <p className="text-sm text-[var(--text-muted)]">
         이미 계정이 있나요?{' '}

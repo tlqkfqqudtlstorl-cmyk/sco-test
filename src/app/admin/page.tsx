@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import { getCurrentUserOptional } from '@/lib/auth/current-user';
+import { getAdminOverview } from '@/lib/admin-db';
 
 export const metadata = {
   title: '관리',
@@ -29,10 +30,11 @@ export default async function AdminPage() {
       </div>
     );
   }
+  const overview = await getAdminOverview();
 
   return (
     <div className="min-h-[calc(100dvh-3.5rem)] bg-[var(--bg-primary)]">
-      <div className="container-app py-12 max-w-2xl">
+      <div className="container-app py-12 max-w-5xl">
         <header className="mb-8">
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">
             운영
@@ -41,18 +43,49 @@ export default async function AdminPage() {
             관리자
           </h1>
         </header>
-        <div className="box p-6 space-y-4 text-[var(--text-secondary)]">
-          <p>
-            문제 CRUD·유저 관리·신고 처리 등은 Phase 3 범위입니다. 현재는 역할
-            검증만 연결되어 있습니다.
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-sm">
-            <li>데이터베이스 백업 및 마이그레이션은 배포 환경에서 수행하세요.</li>
-            <li>시드 계정 비밀번호는 개발용입니다. 운영 전 반드시 교체하세요.</li>
-          </ul>
-          <Link href="/problems" className="pill-link inline-block">
-            문제 목록으로
-          </Link>
+        <div className="grid gap-4 sm:grid-cols-4">
+          {[
+            ['사용자', overview.users],
+            ['문제', overview.problems],
+            ['제출', overview.submissions],
+            ['대회', overview.contests],
+          ].map(([label, value]) => (
+            <div key={label} className="box p-4">
+              <p className="text-xs text-[var(--text-muted)]">{label}</p>
+              <p className="mt-2 font-mono text-2xl font-semibold text-[var(--text-primary)]">{value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid gap-6 lg:grid-cols-2">
+          <section className="box overflow-hidden">
+            <div className="border-b border-[var(--border-primary)] px-4 py-3 text-sm font-semibold text-[var(--text-primary)]">
+              최근 사용자
+            </div>
+            <div className="divide-y divide-[var(--border-primary)]">
+              {overview.recentUsers.map((u) => (
+                <div key={u.username} className="px-4 py-3 text-sm">
+                  <Link href={`/users/${u.username}`} className="font-medium text-[var(--text-primary)]">{u.username}</Link>
+                  <p className="text-xs text-[var(--text-muted)]">{u.email} · {u.role} · {u.status}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section className="box overflow-hidden">
+            <div className="border-b border-[var(--border-primary)] px-4 py-3 text-sm font-semibold text-[var(--text-primary)]">
+              최근 제출
+            </div>
+            <div className="divide-y divide-[var(--border-primary)]">
+              {overview.recentSubmissions.map((s) => (
+                <div key={s.id} className="px-4 py-3 text-sm text-[var(--text-secondary)]">
+                  <span className="font-medium text-[var(--text-primary)]">{s.user.username}</span>
+                  {' · '}
+                  <Link href={`/problems/${s.problem.number}`} className="text-[var(--accent-link)]">{s.problem.number}. {s.problem.title}</Link>
+                  <span className="ml-2 font-mono">{s.status}</span>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

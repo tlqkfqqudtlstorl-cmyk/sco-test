@@ -29,7 +29,7 @@ No typecheck command exists.
 - **Auth flow**: `iron-session` cookie (`banye_session`, 14-day TTL). `getCurrentUserOptional()` in server components. `SESSION_SECRET` env var (hardcoded dev fallback — set for production).
 - **Theme**: `localStorage` (`banye-theme` key), `data-theme` attribute on `<html>`. Dark/light via `useTheme()` hook from `ThemeProvider`.
 - **Code auto-save**: `localStorage` keyed as `banye-code-{problemId}-{lang}`. Language per problem saved as `banye-lang-{problemId}`.
-- **Judge**: DEMO ONLY — checks for `__DEMO_AC__` string in code. Always WA unless marker present.
+- **Judge**: Server-side testcase runner for Python/Node.js submissions. Unsupported languages return CE.
 
 ## Key Pages
 | Route | Component |
@@ -42,7 +42,7 @@ No typecheck command exists.
 | `/ranking` | Leaderboard (top 80 by rating) |
 | `/settings` | Profile edit, password change (login required) |
 | `/users/[username]` | Public profile |
-| `/contests` | Placeholder ("준비 중") |
+| `/contests` | Contest list and registration |
 
 ## DB Models
 `User`, `Problem`, `Category`, `SubCategory`, `Submission`, `SubscriptionPlan`, `UserSubscription`

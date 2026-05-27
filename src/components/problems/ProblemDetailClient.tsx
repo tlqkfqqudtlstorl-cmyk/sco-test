@@ -172,6 +172,16 @@ export default function ProblemDetailClient({
                   <div className="whitespace-pre-wrap text-[var(--text-primary)]/90">
                     {problem.description}
                   </div>
+                  {problem.imageUrl && (
+                    <figure className="mt-6 rounded-md border border-[var(--border-primary)] bg-white p-3">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={problem.imageUrl}
+                        alt={`${problem.title} 설명 이미지`}
+                        className="max-h-[360px] w-full object-contain"
+                      />
+                    </figure>
+                  )}
                   <div className="mt-8 space-y-4">
                     {problem.examples.map((ex, i) => (
                       <div
@@ -221,8 +231,7 @@ export default function ProblemDetailClient({
             <div className="px-4 py-2.5 text-xs text-[var(--text-secondary)] border-b border-[var(--border-primary)] bg-[var(--bg-tertiary)] flex flex-wrap items-center justify-between gap-2">
               <span>소스 코드</span>
               <span className="text-[var(--text-muted)]">
-                데모 채점:{' '}
-                <code className="text-[var(--accent-link)]">__DEMO_AC__</code> 포함 시 AC
+                서버 테스트케이스 기준 채점
               </span>
             </div>
             <div className="flex-1 min-h-0">

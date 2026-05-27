@@ -33,10 +33,23 @@ export async function subscribeAction(planId: string, paymentMethod: string) {
   const endDate = new Date();
   endDate.setMonth(endDate.getMonth() + 1);
 
-  await prisma.userSubscription.upsert({
-    where: { userId_planId: { userId: user.id, planId } },
-    create: { userId: user.id, planId, status: 'ACTIVE', endDate, paymentMethod },
-    update: { status: 'ACTIVE', endDate, paymentMethod, startDate: new Date() },
+  await prisma.$transaction(async (tx) => {
+    const subscription = await tx.userSubscription.upsert({
+      where: { userId_planId: { userId: user.id, planId } },
+      create: { userId: user.id, planId, status: 'ACTIVE', endDate, paymentMethod },
+      update: { status: 'ACTIVE', endDate, paymentMethod, startDate: new Date() },
+    });
+    await tx.payment.create({
+      data: {
+        userId: user.id,
+        subscriptionId: subscription.id,
+        planId,
+        amount: plan.price,
+        method: paymentMethod,
+        status: 'PAID',
+        providerRef: `local_${user.id}_${planId}_${Date.now()}`,
+      },
+    });
   });
 
   revalidatePath('/');
@@ -49,9 +62,15 @@ export async function cancelSubscription(subscriptionId: string) {
   const user = await getCurrentUserOptional();
   if (!user) return { error: '로그인이 필요합니다.' };
 
-  await prisma.userSubscription.updateMany({
-    where: { id: subscriptionId, userId: user.id },
-    data: { status: 'CANCELLED' },
+  await prisma.$transaction(async (tx) => {
+    await tx.userSubscription.updateMany({
+      where: { id: subscriptionId, userId: user.id },
+      data: { status: 'CANCELLED' },
+    });
+    await tx.payment.updateMany({
+      where: { subscriptionId, userId: user.id, status: 'PAID' },
+      data: { status: 'CANCELLED', cancelledAt: new Date() },
+    });
   });
 
   revalidatePath('/');

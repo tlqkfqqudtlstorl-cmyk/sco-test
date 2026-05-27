@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
-import { Camera, ExternalLink, BookOpen, Mail, Shield } from 'lucide-react';
+import { Camera, BookOpen, Mail, Shield } from 'lucide-react';
 
 import {
   changePasswordAction,

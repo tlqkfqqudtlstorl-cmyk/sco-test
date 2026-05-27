@@ -25,16 +25,14 @@ function getSystemTheme(): Theme {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
-
-  useEffect(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'dark';
     const stored = localStorage.getItem('banye-theme');
     if (stored === 'light' || stored === 'dark') {
-      setTheme(stored);
-    } else {
-      setTheme(getSystemTheme());
+      return stored;
     }
-  }, []);
+    return getSystemTheme();
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

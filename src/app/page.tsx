@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -24,7 +23,7 @@ export default function Home() {
       <section className="border-t border-[var(--border-primary)]">
         <div className="container-app py-8">
           <div className="flex flex-wrap justify-center gap-3">
-            {['Python', 'C++', 'Java', 'JavaScript', '알고리즘', '클라우드', '네트워크', 'DB'].map((name) => (
+            {['Python', 'C++', 'Java', 'JavaScript', '알고리즘', '자료구조', 'SQL', 'DB'].map((name) => (
               <span key={name} className="track-pill text-sm px-4 py-2">{name}</span>
             ))}
           </div>

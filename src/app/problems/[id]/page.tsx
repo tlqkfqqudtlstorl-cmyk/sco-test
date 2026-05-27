@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import ProblemDetailClient from '@/components/problems/ProblemDetailClient';
 import { getCurrentUserOptional } from '@/lib/auth/current-user';
 import {
@@ -19,8 +19,11 @@ export default async function ProblemPage({
   if (!row) notFound();
 
   const user = await getCurrentUserOptional();
+  if (!user) {
+    redirect(`/login?next=/problems/${row.number}`);
+  }
   const problem = toProblemClient(mapRowToProblem(row));
-  const solvedNumbers = await listSolvedProblemNumbersForUser(user?.id ?? null);
+  const solvedNumbers = await listSolvedProblemNumbersForUser(user.id);
   const isSolved = solvedNumbers.includes(row.number);
   const { prev, next } = await getPrevNextProblem(row.number);
 
@@ -32,7 +35,7 @@ export default async function ProblemPage({
       subCategorySlug={row.subCategory?.slug ?? null}
       subCategoryName={row.subCategory?.name ?? null}
       isSolved={isSolved}
-      isLoggedIn={!!user}
+      isLoggedIn
       prevProblem={prev ?? undefined}
       nextProblem={next ?? undefined}
     />

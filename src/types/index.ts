@@ -99,6 +99,7 @@ export interface Problem {
   inputDescription: string;
   outputDescription: string;
   examples: ProblemExample[];
+  imageUrl?: string;
   hint?: string;
   
   // Verified requirements

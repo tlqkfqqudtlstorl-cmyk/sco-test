@@ -82,13 +82,11 @@ function Donut({
   const cy = size / 2;
   const r = (size - strokeWidth) / 2;
 
-  let cumulative = 0;
-  const paths = segments.map((seg) => {
-    if (seg.value === 0 || total === 0) return null;
+  const paths = segments.reduce<{ paths: React.ReactNode[]; angle: number }>((acc, seg) => {
+    if (seg.value === 0 || total === 0) return acc;
     const pct = seg.value / total;
     const angle = pct * 360;
-    const startAngle = cumulative;
-    cumulative += angle;
+    const startAngle = acc.angle;
 
     const startRad = ((startAngle - 90) * Math.PI) / 180;
     const endRad = ((startAngle + angle - 90) * Math.PI) / 180;
@@ -100,7 +98,10 @@ function Donut({
 
     const largeArc = angle > 180 ? 1 : 0;
 
-    return (
+    return {
+      angle: acc.angle + angle,
+      paths: [
+        ...acc.paths,
       <path
         key={seg.label}
         d={`M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2}`}
@@ -109,8 +110,9 @@ function Donut({
         strokeWidth={strokeWidth}
         strokeLinecap="round"
       />
-    );
-  });
+      ],
+    };
+  }, { paths: [], angle: 0 }).paths;
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="shrink-0">

@@ -9,7 +9,6 @@ import type { CategoryNav, ProblemListItemClient } from '@/types';
 
 const CATEGORY_GROUPS = [
   { label: '프로그래밍 언어', slugs: new Set(['python', 'javascript', 'cpp', 'java']) },
-  { label: '보안/CTF', slugs: new Set(['security', 'ctf']) },
 ] as const;
 const GROUPED_SLUGS = new Set(CATEGORY_GROUPS.flatMap((g) => [...g.slugs]));
 

@@ -68,6 +68,7 @@ export function mapRowToProblem(row: ProblemWithRelations): Problem {
     inputDescription: row.inputDesc,
     outputDescription: row.outputDesc,
     examples: parseExamples(row.examples),
+    imageUrl: row.imageUrl ?? undefined,
     hint: row.hint ?? undefined,
     requiresExplanation: false,
     requiresUnderstanding: false,

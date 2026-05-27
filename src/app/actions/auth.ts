@@ -93,6 +93,22 @@ export async function loginAction(
   return { ok: true, next: safeNext };
 }
 
+export async function loginRedirectAction(formData: FormData): Promise<void> {
+  const result = await loginAction(null, formData);
+  if (result?.error) {
+    redirect(`/login?error=${encodeURIComponent(result.error)}`);
+  }
+  redirect(result?.next ?? '/');
+}
+
+export async function registerRedirectAction(formData: FormData): Promise<void> {
+  const result = await registerAction(null, formData);
+  if (result?.error) {
+    redirect(`/register?error=${encodeURIComponent(result.error)}`);
+  }
+  redirect('/');
+}
+
 export async function logoutAction(): Promise<void> {
   const session = await getIronSessionTyped();
   session.destroy();
@@ -229,7 +245,6 @@ export async function uploadAvatarAction(
 
 /** 제출 기준으로 solved·rating 재계산 (설정 화면에서 호출) */
 export async function syncStatsForCurrentUser(
-  _formData?: FormData,
 ): Promise<void> {
   const session = await getIronSessionTyped();
   if (!session.userId) return;
